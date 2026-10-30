@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hAPPy</title>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="navbar">
+        <div class="navbar-container">
+            <div class="logo-area">
+                <a href="#inicio" aria-label="hAPPy - início">
+                    <img src="assets/logo.png" style="height: auto; width: 100px; align-items: center;" alt="hAPPy Logo" class="logo">
+                </a>
+            </div>
+            <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="navbarMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="navbar-menu" id="navbarMenu" aria-label="Menu principal" hidden>
+                <a href="#inicio">Início</a>
+                <a href="#como-funciona">Como funciona</a>
+                <a href="#orcamento">Orçamento</a>
+                <a href="#perguntas">Perguntas frequentes</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-container">
+            <h1 class="display-hero">Sua festa completa, organizada e dentro do orçamento.</h1>
+            <p class="body-lg">No Happy você resolve tudo em um único lugar!</p>
+            <a href="#orcamento" class="btn-primary-lg">QUERO SIMULAR MINHA FESTA GRÁTIS</a>
+            <span class="microcopy">⏱️ Leva menos de 2 minutos. Sem compromisso.</span>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="badges-bar">
+        <div class="badges-container">
+            <div class="badge-item">🔒 Pagamento Seguro</div>
+            <div class="badge-item">⭐ Fornecedores 100% Avaliados</div>
+            <div class="badge-item">📍 Atendimento em Toda a Grande SP</div>
+        </div>
+    </section>
+
+    <!-- Problema vs Solução -->
+    <section class="problem-solution">
+        <div class="content-container">
+            <h2 class="headline-lg">Chega de passar dias planejando e organizando uma festa.</h2>
+            <p class="body-md">Isso deveria ser um momento de alegria, mas acaba virando uma dor de cabeça. São dezenas de mensagens no WhatsApp para cobrar orçamentos e entregas de bolo, salgados, decoração e brinquedos. No final, você ainda precisa lidar com fretes separados, múltiplos pagamentos e o medo de algo dar errado no dia.</p>
+            <p class="body-md highlight-text">O Happy foi criado para absorver toda essa burocracia para que você só precise se preocupar em aproveitar esse momento especial.</p>
+        </div>
+    </section>
+
+    <!-- Como Funciona -->
+    <section class="how-it-works" id="como-funciona">
+        <div class="content-container">
+            <h2 class="headline-lg text-center">Sua festa pronta em 3 passos:</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="title-md">Envie os detalhes</h3>
+                    <p class="body-sm">Preencha nosso formulário rápido abaixo.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="title-md">Aprove a Proposta</h3>
+                    <p class="body-sm">Enviamos um orçamento único conforme solicitado nos detalhes.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="title-md">Aproveite a Festa</h3>
+                    <p class="body-sm">Nossa equipe coordena toda a execução no dia do evento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulário de Conversão Avançado -->
+    <section id="orcamento" class="form-section">
+        <div class="form-card">
+            <h2 class="headline-md">Planeje sua Festa Agora</h2>
+            <p class="body-sm form-subtitle">Informe os detalhes do evento para receber o orçamento no WhatsApp.</p>
+            
+            <form id="partyForm">
+                <!-- Informações de Contato -->
+                <div class="input-group">
+                    <label class="label-md" for="nome">Seu Nome Completo</label>
+                    <input type="text" id="nome" placeholder="Ex: Maria Silva" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="label-md" for="evento">Nome do Evento</label>
+                    <input type="text" id="evento" placeholder="Ex: Aniversário da Júlia" required>
+                </div>
+
+                <!-- Logística do Evento -->
+                <div class="input-group">
+                    <label class="label-md" for="data">Data Estimada do Evento</label>
+                    <input type="date" id="data" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="label-md" for="periodo">Período da Festa</label>
+                    <select id="periodo" required>
+                        <option value="" disabled selected>Selecione o horário</option>
+                        <option value="Manhã (ex: 10h às 14h)">Manhã (ex: 10h às 14h)</option>
+                        <option value="Tarde (ex: 13h às 17h)">Tarde (ex: 13h às 17h)</option>
+                        <option value="Noite (ex: 18h às 22h)">Noite (ex: 18h às 22h)</option>
+                        <option value="Outro horário">Outro horário</option>
+                    </select>
+                </div>
+                <div class="input-row" id="customTimeFields" hidden>
+                    <div class="input-group flex-1">
+                        <label class="label-md" for="hora_inicio">Horário de início</label>
+                        <input type="time" id="hora_inicio">
+                    </div>
+                    <div class="input-group flex-1">
+                        <label class="label-md" for="hora_termino">Horário de término</label>
+                        <input type="time" id="hora_termino">
+                    </div>
+                </div>
+
+                <!-- Detalhes do Aniversariante -->
+                <div class="input-group">
+                    <label class="label-md" for="idade">Idade que o(a) aniversariante vai fazer</label>
+                    <input type="number" id="idade" min="1" max="17" placeholder="Ex: 5" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="label-md" for="tema">Tema Desejado da Festa</label>
+                    <input type="text" id="tema" placeholder="Ex: Dinossauros, Princesas, etc..." required>
+                </div>
+
+                <!-- Escopo de Convidados -->
+                <div class="input-row">
+                    <div class="input-group flex-1">
+                        <label class="label-md" for="adultos">Nº de Adultos</label>
+                        <input type="number" id="adultos" min="0" placeholder="Ex: 25" required>
+                    </div>
+                    <div class="input-group flex-1">
+                        <label class="label-md" for="criancas">Nº de Crianças</label>
+                        <input type="number" id="criancas" min="0" placeholder="Ex: 15" required>
+                    </div>
+                </div>
+
+                <!-- Preferências do Local -->
+                <div class="input-group">
+                    <label class="label-md" for="local_tipo">Onde será realizada a festa?</label>
+                    <select id="local_tipo" required>
+                        <option value="" disabled selected>Selecione o local</option>
+                        <option value="Salão do Condomínio">Salão do Condomínio</option>
+                        <option value="Casa Própria / Quintal">Casa / Quintal</option>
+                        <option value="Chácara / Sítio">Chácara / Sítio</option>
+                        <option value="Preciso de Espaço para alugar">Preciso de Espaço para alugar</option>
+                    </select>
+                </div>
+
+                <div id="addressFields" hidden>
+                    <h3 class="label-md">Endereço da festa</h3>
+                    <div class="input-group">
+                        <label class="label-md" for="cep">CEP</label>
+                        <input type="text" id="cep" inputmode="numeric" autocomplete="postal-code"
+                               placeholder="Ex: 01001-000" maxlength="9" pattern="[0-9]{5}-[0-9]{3}"
+                               aria-describedby="cepStatus">
+                        <small id="cepStatus" class="address-status" role="status" aria-live="polite"></small>
+                    </div>
+                    <div class="input-group">
+                        <label class="label-md" for="logradouro">Rua / Avenida</label>
+                        <input type="text" id="logradouro" autocomplete="street-address">
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group flex-1">
+                            <label class="label-md" for="numero">Número</label>
+                            <input type="text" id="numero" autocomplete="address-line2">
+                        </div>
+                        <div class="input-group flex-1">
+                            <label class="label-md" for="complemento">Complemento (opcional)</label>
+                            <input type="text" id="complemento" autocomplete="address-line3">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label class="label-md" for="bairro">Bairro</label>
+                        <input type="text" id="bairro" autocomplete="address-level3">
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group flex-1">
+                            <label class="label-md" for="cidade">Cidade</label>
+                            <input type="text" id="cidade" autocomplete="address-level2">
+                        </div>
+                        <div class="input-group flex-1">
+                            <label class="label-md" for="estado">Estado</label>
+                            <input type="text" id="estado" autocomplete="address-level1" maxlength="2">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Serviços Inclusos (Múltipla Escolha Linear) -->
+                <div class="input-group">
+                    <label class="label-md">Serviços que deseja incluir no pacote</label>
+                    <div class="checkbox-linear-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="servicos" value="Decoração Completa">
+                            <span>Decoração Completa (Painel, Mesa e Balões)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="servicos" value="Alimentação / Buffet">
+                            <span>Alimentação (Salgados, Doces e Bolo)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="servicos" value="Brinquedos / Recreação">
+                            <span>Brinquedos (Pula-pula, Piscina de Bolinhas, etc)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="servicos" value="Garçons / Equipe de Apoio">
+                            <span>Equipe de Apoio (Garçons, Copeiras ou Monitores)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Barra Deslizante de Orçamento (Slider Dinâmico) -->
+                <div class="input-group">
+                    <label class="label-md" for="orcamento_range">Orçamento Limite Estimado</label>
+                    <div class="slider-container">
+                        <input type="range" id="orcamento_range" min="900" max="9000" step="100" value="900">
+                        <div class="slider-value-display">
+                            <span>Valor Pretendido:</span>
+                            <strong id="orcamento_visual">R$ 900</strong>
+                        </div>
+                        <small style="display: block; text-align: center; margin-top: 0.5rem;">Deslize para ajustar</small>    
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary-block">GERAR ORÇAMENTO</button>
+                
+            </form>
+        <small style="display: block; text-align: center;"><br>🔒 Seus dados estão protegidos em conformidade com a LGPD e serão utilizados exclusivamente para a elaboração do orçamento e execução da sua festa.</small>
+        </div>
+           
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="perguntas">
+        <div class="content-container">
+            <h2 class="headline-lg text-center">Perguntas Frequentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3 class="title-md">O hAPPy cobra alguma taxa dos pais pelo serviço?</h3>
+                    <p class="body-sm">Não. A nossa curadoria e o planejamento do orçamento unificado são 100% gratuitos para os pais. Nós negociamos pacotes de volume direto com os prestadores de serviço e comércios parceiros.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="title-md">Como vocês garantem que os fornecedores são de confiança?</h3>
+                    <p class="body-sm">Todos os fornecedores parceiros passam por um critério rigoroso de seleção. Verificamos o histórico de entregas, pontualidade, qualidade dos materiais e avaliações reais de outros clientes na Grande São Paulo.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="title-md">E se um fornecedor atrasar ou faltar no dia da festa?</h3>
+                    <p class="body-sm">Essa é a nossa maior vantagem. O contrato da sua festa é conosco. Caso ocorra qualquer imprevisto com qualquer parceiro, nossa equipe aciona imediatamente outro fornecedor parceiro.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="content-container">
+            <h2 class="headline-lg text-center">🥳 Pronto para planejar sua próxima festa?</h2>
+            <a href="#orcamento" class="btn-primary-lg">SIMULAR MINHA FESTA GRÁTIS</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="logo-area">
+                <img src="assets/logoA.png"
+     style="height: auto; width: 100px; display: block; margin: 0 auto;"
+     alt="hAPPy Logo"
+     class="logo">
+            </div>
+        <p class="body-sm">© 2026 Happy Tecnologia de Eventos.<br>Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
