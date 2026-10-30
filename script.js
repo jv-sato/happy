@@ -15,6 +15,84 @@ const addressLocations = ['Salão do Condomínio', 'Casa Própria / Quintal', 'C
 let cepRequestId = 0;
 const menuToggle = document.querySelector('.menu-toggle');
 const navbarMenu = document.getElementById('navbarMenu');
+const serviceCards = document.querySelectorAll('.service-card[data-service]');
+const selectedServicesContainer = document.getElementById('selectedServices');
+const screenSections = document.querySelectorAll('[data-screen]');
+const screenLinks = document.querySelectorAll('[data-nav-screen]');
+
+function getScreenFromHash() {
+    const requestedScreen = window.location.hash.slice(1);
+    return ['explorar', 'minha-festa', 'conta'].includes(requestedScreen)
+        ? requestedScreen
+        : 'inicio';
+}
+
+function renderScreen() {
+    const activeScreen = getScreenFromHash();
+    screenSections.forEach((section) => {
+        section.hidden = section.dataset.screen !== activeScreen;
+    });
+    screenLinks.forEach((link) => {
+        if (link.dataset.navScreen === activeScreen) {
+            link.setAttribute('aria-current', 'page');
+        } else {
+            link.removeAttribute('aria-current');
+        }
+    });
+}
+
+function renderSelectedServices() {
+    const selectedServices = Array.from(serviceCards).filter((card) => card.classList.contains('is-selected'));
+    serviceCards.forEach((card) => {
+        const selected = card.classList.contains('is-selected');
+        const button = card.querySelector('.service-add-button');
+        button.setAttribute('aria-pressed', String(selected));
+        button.setAttribute('aria-label', `${selected ? 'Remover' : 'Adicionar'} ${card.dataset.service} ${selected ? 'da' : 'à'} Minha Festa`);
+        button.querySelector('span').textContent = selected ? 'Adicionado' : 'Adicionar';
+    });
+
+    selectedServicesContainer.replaceChildren();
+    if (selectedServices.length === 0) {
+        const emptyMessage = document.createElement('p');
+        emptyMessage.className = 'empty-services';
+        emptyMessage.textContent = 'Ainda não há serviços selecionados. Explore as categorias para montar sua festa.';
+        selectedServicesContainer.append(emptyMessage);
+        return;
+    }
+
+    const servicesByCategory = new Map();
+    selectedServices.forEach((card) => {
+        const category = card.dataset.category;
+        if (!servicesByCategory.has(category)) servicesByCategory.set(category, []);
+        servicesByCategory.get(category).push(card.dataset.service);
+    });
+
+    servicesByCategory.forEach((services, category) => {
+        const group = document.createElement('section');
+        group.className = 'selected-service-group';
+        const heading = document.createElement('h2');
+        heading.className = 'title-md';
+        heading.textContent = category;
+        const list = document.createElement('ul');
+        services.forEach((service) => {
+            const item = document.createElement('li');
+            item.textContent = service;
+            list.append(item);
+        });
+        group.append(heading, list);
+        selectedServicesContainer.append(group);
+    });
+}
+
+window.addEventListener('hashchange', renderScreen);
+renderScreen();
+renderSelectedServices();
+serviceCards.forEach((card) => {
+    card.querySelector('.service-add-button').addEventListener('click', () => {
+        card.classList.toggle('is-selected');
+        renderSelectedServices();
+    });
+});
 
 function updateCustomTimeVisibility() {
     const showCustomTime = periodoSelect.value === 'Outro horário';
@@ -161,11 +239,9 @@ document.getElementById('partyForm').addEventListener('submit', function(e) {
         : '';
 
     // Coletando múltiplos checkboxes de serviços de forma linear
-    const checkboxes = document.querySelectorAll('input[name="servicos"]:checked');
-    let servicosSelecionados = [];
-    checkboxes.forEach((cb) => {
-        servicosSelecionados.push(cb.value);
-    });
+    const servicosSelecionados = Array.from(serviceCards)
+        .filter((card) => card.classList.contains('is-selected'))
+        .map((card) => card.dataset.service);
     
     // Tratativa caso nenhum serviço seja clicado
     const listaServicos = servicosSelecionados.length > 0 ? servicosSelecionados.join(', ') : "Apenas Curadoria Geral";

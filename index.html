@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hAPPy</title>
+    <title>Happy</title>
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +16,8 @@
     <header class="navbar">
         <div class="navbar-container">
             <div class="logo-area">
-                <a href="#inicio" aria-label="hAPPy - início">
-                    <img src="assets/logo.png" style="height: auto; width: 100px; align-items: center;" alt="hAPPy Logo" class="logo">
+                <a href="#inicio" aria-label="Happy- início">
+                    <img src="assets/logo.png" alt="hAPPy Logo" class="logo">
                 </a>
             </div>
             <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="navbarMenu">
@@ -26,35 +26,26 @@
                 <span></span>
             </button>
             <nav class="navbar-menu" id="navbarMenu" aria-label="Menu principal" hidden>
-                <a href="#inicio">Início</a>
-                <a href="#como-funciona">Como funciona</a>
-                <a href="#orcamento">Orçamento</a>
-                <a href="#perguntas">Perguntas frequentes</a>
+                <a href="#inicio" data-nav-screen="inicio">Início</a>
+                <a href="#explorar" data-nav-screen="explorar">Explorar</a>
+                <a href="#minha-festa" data-nav-screen="minha-festa">Minha Festa</a>
+                <a href="#conta" data-nav-screen="conta">Conta</a>
             </nav>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" id="inicio">
+    <section class="hero" id="inicio" data-screen="inicio">
         <div class="hero-container">
             <h1 class="display-hero">Sua festa completa, organizada e dentro do orçamento.</h1>
             <p class="body-lg">No Happy você resolve tudo em um único lugar!</p>
-            <a href="#orcamento" class="btn-primary-lg">QUERO SIMULAR MINHA FESTA GRÁTIS</a>
-            <span class="microcopy">⏱️ Leva menos de 2 minutos. Sem compromisso.</span>
-        </div>
-    </section>
-
-    <!-- Trust Badges -->
-    <section class="badges-bar">
-        <div class="badges-container">
-            <div class="badge-item">🔒 Pagamento Seguro</div>
-            <div class="badge-item">⭐ Fornecedores 100% Avaliados</div>
-            <div class="badge-item">📍 Atendimento em Toda a Grande SP</div>
+            <a href="#explorar" class="btn-primary-lg">QUERO SIMULAR MINHA FESTA GRÁTIS</a>
+            <span class="microcopy">⏱️ <strong>Leva menos de 2 minutos. Sem compromisso.</strong></span>
         </div>
     </section>
 
     <!-- Problema vs Solução -->
-    <section class="problem-solution">
+    <section class="problem-solution" data-screen="inicio">
         <div class="content-container">
             <h2 class="headline-lg">Chega de passar dias planejando e organizando uma festa.</h2>
             <p class="body-md">Isso deveria ser um momento de alegria, mas acaba virando uma dor de cabeça. São dezenas de mensagens no WhatsApp para cobrar orçamentos e entregas de bolo, salgados, decoração e brinquedos. No final, você ainda precisa lidar com fretes separados, múltiplos pagamentos e o medo de algo dar errado no dia.</p>
@@ -63,34 +54,152 @@
     </section>
 
     <!-- Como Funciona -->
-    <section class="how-it-works" id="como-funciona">
+    <section class="how-it-works" id="como-funciona" data-screen="inicio">
         <div class="content-container">
-            <h2 class="headline-lg text-center">Sua festa pronta em 3 passos:</h2>
+            <h2 class="headline-lg text-center">Sua festa organizada em 3 passos:</h2>
             <div class="steps-grid">
                 <div class="step-card">
                     <div class="step-number">1</div>
-                    <h3 class="title-md">Envie os detalhes</h3>
-                    <p class="body-sm">Preencha nosso formulário rápido abaixo.</p>
+                    <h3 class="title-md">Explore os serviços</h3>
+                    <p class="body-sm">Escolha os itens que combinam com a sua festa.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-number">2</div>
-                    <h3 class="title-md">Aprove a Proposta</h3>
-                    <p class="body-sm">Enviamos um orçamento único conforme solicitado nos detalhes.</p>
+                    <h3 class="title-md">Revise sua festa</h3>
+                    <p class="body-sm">Confira os serviços selecionados e defina seu orçamento.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-number">3</div>
-                    <h3 class="title-md">Aproveite a Festa</h3>
-                    <p class="body-sm">Nossa equipe coordena toda a execução no dia do evento.</p>
+                    <h3 class="title-md">Informe seus dados</h3>
+                    <p class="body-sm">Conte os detalhes do evento para receber seu orçamento.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Formulário de Conversão Avançado -->
-    <section id="orcamento" class="form-section">
+    <section id="explorar" class="app-page services-page" data-screen="explorar" hidden>
+        <div class="app-page-container">
+            <header class="app-page-header">
+                <p class="app-eyebrow">Monte sua festa</p>
+                <h1 class="headline-lg">Explore os serviços</h1>
+                <p class="body-md">Escolha os itens que gostaria de incluir. Você pode revisar sua seleção em Minha Festa.</p>
+            </header>
+
+            <section class="service-category" aria-labelledby="decoracao-title">
+                <h2 class="headline-md" id="decoracao-title">Decoração</h2>
+                <div class="service-grid">
+                    <article class="service-card" data-service="Decoração temática completa" data-category="Decoração">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Decoração de festa"><path d="M12 47h40M18 45V28h28v17M23 28V18h18v10M27 18v-6h10v6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="17" r="3" fill="#ffde59"/><circle cx="47" cy="14" r="4" fill="#ffde59"/><path d="m31 8 2-4 2 4 4 2-4 2-2 4-2-4-4-2z" fill="#ffde59"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Decoração temática completa</strong><small>Ambientação personalizada para o tema da festa.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Decoração temática completa à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                    <article class="service-card" data-service="Painel decorativo e mesa do bolo" data-category="Decoração">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Painel decorativo e mesa de bolo"><path d="M10 48h44M15 46V23h34v23M20 23V15h24v8M21 37h22M25 31h14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 31v-5h8v5M29 26v-4h6v4" fill="#ffde59" stroke="currentColor" stroke-width="2"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Painel e mesa do bolo</strong><small>Um espaço especial para cantar parabéns e tirar fotos.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Painel decorativo e mesa do bolo à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                    <article class="service-card" data-service="Arco de balões" data-category="Decoração">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Arco de balões"><path d="M15 49a17 17 0 0 1 34 0M32 49v7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="18" cy="43" r="6" fill="#ffde59"/><circle cx="18" cy="31" r="6" fill="#d9c8ff"/><circle cx="24" cy="21" r="6" fill="#ffde59"/><circle cx="35" cy="17" r="6" fill="#d9c8ff"/><circle cx="46" cy="23" r="6" fill="#ffde59"/><circle cx="49" cy="35" r="6" fill="#d9c8ff"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Arco de balões</strong><small>Composição de balões para completar a decoração.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Arco de balões à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="service-category" aria-labelledby="alimentacao-title">
+                <h2 class="headline-md" id="alimentacao-title">Alimentação</h2>
+                <div class="service-grid">
+                    <article class="service-card" data-service="Salgados variados" data-category="Alimentação">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Salgados variados"><ellipse cx="32" cy="39" rx="23" ry="12" fill="#ffde59" stroke="currentColor" stroke-width="3"/><path d="M14 37c5-5 10 5 15 0s10 5 15 0 7 1 9 2M21 27l5-7 6 7 6-7 6 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Salgados variados</strong><small>Seleção de salgados para servir seus convidados.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Salgados variados à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                    <article class="service-card" data-service="Bolo decorado" data-category="Alimentação">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Bolo de festa"><path d="M12 35h40v17H12zM17 25h30v10H17z" fill="#ffde59" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M26 25c-5-7 7-7 2-14M38 25c-5-7 7-7 2-14M18 42h5m8 0h5m8 0h5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Bolo decorado</strong><small>Bolo personalizado para o tema da comemoração.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Bolo decorado à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                    <article class="service-card" data-service="Docinhos para festa" data-category="Alimentação">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Docinhos de festa"><path d="m12 35 5-12h30l5 12-6 17H18z" fill="#d9c8ff" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="34" r="7" fill="#ffde59" stroke="currentColor" stroke-width="2"/><circle cx="40" cy="34" r="7" fill="#ffde59" stroke="currentColor" stroke-width="2"/><path d="M24 24v-5m16 5v-5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Docinhos</strong><small>Docinhos variados para a mesa da festa.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Docinhos para festa à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                    <article class="service-card" data-service="Bebidas não alcoólicas" data-category="Alimentação">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Bebidas"><path d="M19 18h26l-3 36H22z" fill="#d9c8ff" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M21 37h22M35 18l7-10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="29" cy="44" r="2" fill="currentColor"/><circle cx="36" cy="48" r="2" fill="currentColor"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Bebidas</strong><small>Opções não alcoólicas para adultos e crianças.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Bebidas não alcoólicas à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="service-category" aria-labelledby="brinquedos-title">
+                <h2 class="headline-md" id="brinquedos-title">Brinquedos</h2>
+                <div class="service-grid">
+                    <article class="service-card" data-service="Pula-pula" data-category="Brinquedos">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Pula-pula"><path d="M12 30h40l-4 23H16z" fill="#d9c8ff" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M12 30V19h40v11M20 19v-7m24 7v-7M21 39h22M26 39v14m12-14v14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Pula-pula</strong><small>Diversão para as crianças durante a festa.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Pula-pula à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                    <article class="service-card" data-service="Piscina de bolinhas" data-category="Brinquedos">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Piscina de bolinhas"><path d="M10 27h44l-5 27H15z" fill="#d9c8ff" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><circle cx="21" cy="31" r="5" fill="#ffde59"/><circle cx="33" cy="29" r="5" fill="#ff9bb5"/><circle cx="44" cy="33" r="5" fill="#ffde59"/><circle cx="28" cy="41" r="5" fill="#ff9bb5"/><circle cx="41" cy="44" r="5" fill="#ffde59"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Piscina de bolinhas</strong><small>Uma opção divertida para os pequenos.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Piscina de bolinhas à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                    <article class="service-card" data-service="Tobogã inflável" data-category="Brinquedos">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Tobogã inflável"><path d="M12 52h43L42 34V13H19v21z" fill="#ffde59" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M24 13v21L12 52M19 22h23M19 30h23" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Tobogã inflável</strong><small>Brincadeira para animar a comemoração.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Tobogã inflável à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                    <article class="service-card" data-service="Recreação infantil" data-category="Brinquedos">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Recreação infantil"><circle cx="24" cy="24" r="8" fill="#ffde59" stroke="currentColor" stroke-width="3"/><circle cx="43" cy="28" r="6" fill="#d9c8ff" stroke="currentColor" stroke-width="3"/><path d="M9 53a15 15 0 0 1 30 0M35 53a10 10 0 0 1 20 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="m24 9 2-4 2 4 4 2-4 2-2 4-2-4-4-2z" fill="#ff9bb5"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Recreação infantil</strong><small>Atividades e brincadeiras acompanhadas.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Recreação infantil à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="service-category" aria-labelledby="equipe-title">
+                <h2 class="headline-md" id="equipe-title">Equipe de Apoio</h2>
+                <div class="service-grid">
+                    <article class="service-card" data-service="Monitor de brinquedos" data-category="Equipe de Apoio">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Monitor de brinquedos"><circle cx="32" cy="20" r="9" fill="#ffde59" stroke="currentColor" stroke-width="3"/><path d="M15 54a17 17 0 0 1 34 0M24 39l8 7 8-7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="m14 20 3-5 3 5 5 3-5 3-3 5-3-5-5-3z" fill="#d9c8ff"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Monitor de brinquedos</strong><small>Acompanhamento das atividades e dos brinquedos.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Monitor de brinquedos à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                    <article class="service-card" data-service="Garçom" data-category="Equipe de Apoio">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Garçom"><circle cx="27" cy="18" r="8" fill="#ffde59" stroke="currentColor" stroke-width="3"/><path d="M12 54a15 15 0 0 1 30 0M38 28l10-7 7 10-10 6z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><circle cx="49" cy="20" r="3" fill="#d9c8ff"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Garçom</strong><small>Apoio para servir os convidados durante a festa.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Garçom à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                    <article class="service-card" data-service="Copeira" data-category="Equipe de Apoio">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Copeira"><path d="M14 31h34v22H14zM18 25h26v6H18z" fill="#d9c8ff" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M22 18v-7m10 7v-7m10 7v-7M24 39h14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M21 18h22" stroke="#ffde59" stroke-width="5" stroke-linecap="round"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Copeira</strong><small>Ajuda com bebidas, mesa e organização do serviço.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Copeira à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                    <article class="service-card" data-service="Montagem e desmontagem" data-category="Equipe de Apoio">
+                        <svg class="service-image" viewBox="0 0 64 64" role="img" aria-label="Montagem de festa"><path d="M10 51h44M14 48V25l18-13 18 13v23M23 48V34h18v14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 25h22M32 18v7" stroke="#ffde59" stroke-width="4" stroke-linecap="round"/><circle cx="18" cy="18" r="3" fill="#d9c8ff"/><circle cx="47" cy="17" r="3" fill="#d9c8ff"/></svg>
+                        <div class="service-card-content"><span class="service-card-copy"><strong>Montagem e desmontagem</strong><small>Suporte na preparação e organização do espaço.</small></span><button class="service-add-button" type="button" aria-pressed="false" aria-label="Adicionar Montagem e desmontagem à Minha Festa"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7 12 3l9 4-9 4z"></path><path d="M3 7v10l9 4 9-4V7M12 11v10"></path></svg><span>Adicionar</span></button></div>
+                    </article>
+                </div>
+            </section>
+
+            <a href="#minha-festa" class="btn-primary-block app-next-button">VER MINHA FESTA</a>
+        </div>
+    </section>
+
+    <section id="minha-festa" class="app-page party-page" data-screen="minha-festa" hidden>
         <div class="form-card">
-            <h2 class="headline-md">Planeje sua Festa Agora</h2>
-            <p class="body-sm form-subtitle">Informe os detalhes do evento para receber o orçamento no WhatsApp.</p>
+            <p class="app-eyebrow">Sua seleção</p>
+            <h1 class="headline-lg">Minha Festa</h1>
+            <p class="body-sm form-subtitle">Confira os serviços escolhidos e ajuste seu orçamento estimado.</p>
+            <div id="selectedServices" class="selected-services" aria-live="polite"></div>
+            <a href="#explorar" class="btn-secondary-sm">ADICIONAR SERVIÇOS</a>
+            <div class="input-group party-budget">
+                <label class="label-md" for="orcamento_range">Orçamento limite estimado</label>
+                <div class="slider-container">
+                    <input type="range" id="orcamento_range" min="900" max="9000" step="100" value="900">
+                    <div class="slider-value-display">
+                        <span>Orçamento:</span>
+                        <strong id="orcamento_visual">R$ 900</strong>
+                    </div>
+                </div>
+            </div>
+            <a href="#conta" class="btn-primary-block app-next-button">CONTINUAR PARA CONTA</a>
+        </div>
+    </section>
+
+    <!-- Dados para solicitar o orçamento -->
+    <section id="conta" class="form-section app-page account-page" data-screen="conta" hidden>
+        <div class="form-card">
+            <p class="app-eyebrow">Última etapa</p>
+            <h1 class="headline-lg">Conta e dados da festa</h1>
+            <p class="body-sm form-subtitle">Preencha seus dados e as informações do evento para solicitar o orçamento.</p>
             
             <form id="partyForm">
                 <!-- Informações de Contato -->
@@ -106,7 +215,7 @@
 
                 <!-- Logística do Evento -->
                 <div class="input-group">
-                    <label class="label-md" for="data">Data Estimada do Evento</label>
+                    <label class="label-md" for="data">Data da Festa</label>
                     <input type="date" id="data" required>
                 </div>
 
@@ -205,43 +314,7 @@
                     </div>
                 </div>
 
-                <!-- Serviços Inclusos (Múltipla Escolha Linear) -->
-                <div class="input-group">
-                    <label class="label-md">Serviços que deseja incluir no pacote</label>
-                    <div class="checkbox-linear-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="servicos" value="Decoração Completa">
-                            <span>Decoração Completa (Painel, Mesa e Balões)</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="servicos" value="Alimentação / Buffet">
-                            <span>Alimentação (Salgados, Doces e Bolo)</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="servicos" value="Brinquedos / Recreação">
-                            <span>Brinquedos (Pula-pula, Piscina de Bolinhas, etc)</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="servicos" value="Garçons / Equipe de Apoio">
-                            <span>Equipe de Apoio (Garçons, Copeiras ou Monitores)</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Barra Deslizante de Orçamento (Slider Dinâmico) -->
-                <div class="input-group">
-                    <label class="label-md" for="orcamento_range">Orçamento Limite Estimado</label>
-                    <div class="slider-container">
-                        <input type="range" id="orcamento_range" min="900" max="9000" step="100" value="900">
-                        <div class="slider-value-display">
-                            <span>Valor Pretendido:</span>
-                            <strong id="orcamento_visual">R$ 900</strong>
-                        </div>
-                        <small style="display: block; text-align: center; margin-top: 0.5rem;">Deslize para ajustar</small>    
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-primary-block">GERAR ORÇAMENTO</button>
+                <button type="submit" class="btn-primary-block">SOLICITAR ORÇAMENTO</button>
                 
             </form>
         <small style="display: block; text-align: center;"><br>🔒 Seus dados estão protegidos em conformidade com a LGPD e serão utilizados exclusivamente para a elaboração do orçamento e execução da sua festa.</small>
@@ -250,7 +323,7 @@
     </section>
 
     <!-- FAQ -->
-    <section class="faq" id="perguntas">
+    <section class="faq" id="perguntas" data-screen="inicio">
         <div class="content-container">
             <h2 class="headline-lg text-center">Perguntas Frequentes</h2>
             <div class="faq-grid">
@@ -271,15 +344,15 @@
     </section>
 
     <!-- CTA -->
-    <section class="cta-section">
+    <section class="cta-section" data-screen="inicio">
         <div class="content-container">
             <h2 class="headline-lg text-center">🥳 Pronto para planejar sua próxima festa?</h2>
-            <a href="#orcamento" class="btn-primary-lg">SIMULAR MINHA FESTA GRÁTIS</a>
+            <a href="#explorar" class="btn-primary-lg">SIMULAR MINHA FESTA GRÁTIS</a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" data-screen="inicio">
         <div class="logo-area">
                 <img src="assets/logoA.png"
      style="height: auto; width: 100px; display: block; margin: 0 auto;"
@@ -288,6 +361,36 @@
             </div>
         <p class="body-sm">© 2026 Happy Tecnologia de Eventos.<br>Todos os direitos reservados.</p>
     </footer>
+
+    <nav class="bottom-nav" aria-label="Navegação inferior">
+        <a class="bottom-nav-link" href="#inicio" data-nav-screen="inicio">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"></path>
+            </svg>
+            <span>Início</span>
+        </a>
+        <a class="bottom-nav-link" href="#explorar" data-nav-screen="explorar">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="10.8" cy="10.8" r="6.8"></circle>
+                <path d="m16 16 5 5"></path>
+            </svg>
+            <span>Explorar</span>
+        </a>
+        <a class="bottom-nav-link" href="#minha-festa" data-nav-screen="minha-festa">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3 7 12 3l9 4-9 4z"></path>
+                <path d="M3 7v10l9 4 9-4V7M12 11v10"></path>
+            </svg>
+            <span>Minha festa</span>
+        </a>
+        <a class="bottom-nav-link" href="#conta" data-nav-screen="conta">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+            <span>Conta</span>
+        </a>
+    </nav>
 
     <script src="script.js"></script>
 </body>
