@@ -1,13 +1,13 @@
 {
   "id": "./index.html",
-  "name": "Happy - Sua festa organizada",
-  "short_name": "Happy",
-  "description": "Organize sua festa, escolha serviços e solicite seu orçamento.",
+  "name": "hAPPy",
+  "short_name": "hAPPy",
+  "description": "Sua festa completa, organizada e dentro do orçamento.",
   "lang": "pt-BR",
-  "start_url": "./index.html#inicio",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#fdf7ff",
+  "background_color": "#5e17eb",
   "theme_color": "#5e17eb",
   "icons": [
     {
