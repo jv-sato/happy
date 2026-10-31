@@ -39,8 +39,8 @@
         <div class="hero-container">
             <h1 class="display-hero">Sua festa completa, organizada e dentro do orçamento.</h1>
             <p class="body-lg">No Happy você resolve tudo em um único lugar!</p>
-            <a href="#explorar" class="btn-primary-lg">QUERO SIMULAR MINHA FESTA GRÁTIS</a>
-            <span class="microcopy">⏱️ <strong>Leva menos de 2 minutos. Sem compromisso.</strong></span>
+            <a href="#explorar" class="btn-primary-lg">SIMULAR FESTA GRÁTIS</a>
+            <span class="microcopy"><strong>Leva menos de 2 minutos. Sem compromisso.</strong></span>
         </div>
     </section>
 
@@ -48,7 +48,7 @@
     <section class="problem-solution" data-screen="inicio">
         <div class="content-container">
             <h2 class="headline-lg">Chega de passar dias planejando e organizando uma festa.</h2>
-            <p class="body-md">Isso deveria ser um momento de alegria, mas acaba virando uma dor de cabeça. São dezenas de mensagens no WhatsApp para cobrar orçamentos e entregas de bolo, salgados, decoração e brinquedos. No final, você ainda precisa lidar com fretes separados, múltiplos pagamentos e o medo de algo dar errado no dia.</p>
+            <p class="body-sm">Isso deveria ser um momento de alegria, mas acaba virando uma dor de cabeça. São dezenas de ligações e mensagens no WhatsApp para cobrar orçamentos e entregas. No final, você ainda precisa lidar com fretes separados, múltiplos pagamentos e o medo de algo faltar ou dar errado no dia.</p><br>
             <p class="body-md highlight-text">O Happy foi criado para absorver toda essa burocracia para que você só precise se preocupar em aproveitar esse momento especial.</p>
         </div>
     </section>
@@ -65,13 +65,13 @@
                 </div>
                 <div class="step-card">
                     <div class="step-number">2</div>
-                    <h3 class="title-md">Revise sua festa</h3>
+                    <h3 class="title-md">Revise seu pacote</h3>
                     <p class="body-sm">Confira os serviços selecionados e defina seu orçamento.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-number">3</div>
-                    <h3 class="title-md">Informe seus dados</h3>
-                    <p class="body-sm">Conte os detalhes do evento para receber seu orçamento.</p>
+                    <h3 class="title-md">Informe os detalhes</h3>
+                    <p class="body-sm">Conte os detalhes do evento para receber seu orçamento gratuito.</p>
                 </div>
             </div>
         </div>
@@ -183,44 +183,27 @@
             <div class="input-group party-budget">
                 <label class="label-md" for="orcamento_range">Orçamento limite estimado</label>
                 <div class="slider-container">
-                    <input type="range" id="orcamento_range" min="900" max="9000" step="100" value="900">
+                    <input type="range" id="orcamento_range" min="400" max="9000" step="200" value="900">
                     <div class="slider-value-display">
-                        <span>Orçamento:</span>
+                        <span>Deslize para ajustar:</span>
                         <strong id="orcamento_visual">R$ 900</strong>
                     </div>
                 </div>
             </div>
-            <a href="#conta" class="btn-primary-block app-next-button">CONTINUAR PARA CONTA</a>
-        </div>
-    </section>
 
-    <!-- Dados para solicitar o orçamento -->
-    <section id="conta" class="form-section app-page account-page" data-screen="conta" hidden>
-        <div class="form-card">
-            <p class="app-eyebrow">Última etapa</p>
-            <h1 class="headline-lg">Conta e dados da festa</h1>
-            <p class="body-sm form-subtitle">Preencha seus dados e as informações do evento para solicitar o orçamento.</p>
-            
             <form id="partyForm">
-                <!-- Informações de Contato -->
+            <section class="party-details" aria-labelledby="party-details-title">
+                <h2 class="headline-md" id="party-details-title">Dados da festa</h2>
                 <div class="input-group">
-                    <label class="label-md" for="nome">Seu Nome Completo</label>
-                    <input type="text" id="nome" placeholder="Ex: Maria Silva" required>
-                </div>
-
-                <div class="input-group">
-                    <label class="label-md" for="evento">Nome do Evento</label>
+                    <label class="label-md" for="evento">Nome do evento</label>
                     <input type="text" id="evento" placeholder="Ex: Aniversário da Júlia" required>
                 </div>
-
-                <!-- Logística do Evento -->
                 <div class="input-group">
-                    <label class="label-md" for="data">Data da Festa</label>
+                    <label class="label-md" for="data">Data da festa</label>
                     <input type="date" id="data" required>
                 </div>
-
                 <div class="input-group">
-                    <label class="label-md" for="periodo">Período da Festa</label>
+                    <label class="label-md" for="periodo">Período da festa</label>
                     <select id="periodo" required>
                         <option value="" disabled selected>Selecione o horário</option>
                         <option value="Manhã (ex: 10h às 14h)">Manhã (ex: 10h às 14h)</option>
@@ -239,31 +222,24 @@
                         <input type="time" id="hora_termino">
                     </div>
                 </div>
-
-                <!-- Detalhes do Aniversariante -->
                 <div class="input-group">
                     <label class="label-md" for="idade">Idade que o(a) aniversariante vai fazer</label>
-                    <input type="number" id="idade" min="1" max="17" placeholder="Ex: 5" required>
+                    <input type="number" id="idade" min="1" placeholder="Ex: 5" required>
                 </div>
-
                 <div class="input-group">
-                    <label class="label-md" for="tema">Tema Desejado da Festa</label>
+                    <label class="label-md" for="tema">Tema desejado da festa</label>
                     <input type="text" id="tema" placeholder="Ex: Dinossauros, Princesas, etc..." required>
                 </div>
-
-                <!-- Escopo de Convidados -->
                 <div class="input-row">
                     <div class="input-group flex-1">
-                        <label class="label-md" for="adultos">Nº de Adultos</label>
+                        <label class="label-md" for="adultos">Nº de adultos</label>
                         <input type="number" id="adultos" min="0" placeholder="Ex: 25" required>
                     </div>
                     <div class="input-group flex-1">
-                        <label class="label-md" for="criancas">Nº de Crianças</label>
+                        <label class="label-md" for="criancas">Nº de crianças</label>
                         <input type="number" id="criancas" min="0" placeholder="Ex: 15" required>
                     </div>
                 </div>
-
-                <!-- Preferências do Local -->
                 <div class="input-group">
                     <label class="label-md" for="local_tipo">Onde será realizada a festa?</label>
                     <select id="local_tipo" required>
@@ -274,7 +250,6 @@
                         <option value="Preciso de Espaço para alugar">Preciso de Espaço para alugar</option>
                     </select>
                 </div>
-
                 <div id="addressFields" hidden>
                     <h3 class="label-md">Endereço da festa</h3>
                     <div class="input-group">
@@ -313,13 +288,44 @@
                         </div>
                     </div>
                 </div>
-
-                <button type="submit" class="btn-primary-block">SOLICITAR ORÇAMENTO</button>
-                
+            </section>
             </form>
-        <small style="display: block; text-align: center;"><br>🔒 Seus dados estão protegidos em conformidade com a LGPD e serão utilizados exclusivamente para a elaboração do orçamento e execução da sua festa.</small>
+            <button type="submit" form="partyForm" id="requestQuoteButton" class="btn-primary-block app-next-button">SOLICITAR ORÇAMENTO</button>
         </div>
-           
+    </section>
+
+    <section id="conta" class="form-section app-page account-page" data-screen="conta" hidden>
+        <div class="form-card">
+            <p class="app-eyebrow">Seus dados</p>
+            <h1 class="headline-lg">Conta</h1>
+            <p class="body-sm form-subtitle">Informe seus dados pessoais.</p>
+
+            <form id="accountForm">
+                <div class="input-group">
+                    <label class="label-md" for="nome">Nome completo</label>
+                    <input type="text" id="nome" autocomplete="name" placeholder="Ex: Maria Silva" required>
+                </div>
+                <div class="input-group">
+                    <label class="label-md" for="celular">Celular</label>
+                    <input type="tel" id="celular" autocomplete="tel" placeholder="Ex: (11) 99999-9999" required>
+                </div>
+                <div class="input-group">
+                    <label class="label-md" for="email">E-mail</label>
+                    <input type="email" id="email" autocomplete="email" placeholder="voce@exemplo.com" required>
+                </div>
+                <div class="input-group">
+                    <label class="label-md" for="cpf">CPF (opcional)</label>
+                    <input type="text" id="cpf" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" maxlength="14">
+                </div>
+                <div class="input-group">
+                    <label class="label-md" for="nascimento">Data de nascimento</label>
+                    <input type="date" id="nascimento" autocomplete="bday" required>
+                </div>
+                <button type="submit" id="saveAccountButton" class="btn-primary-block">SALVAR</button>
+                <a href="#conta" id="deleteAccountLink" class="delete-account-link" hidden>Excluir conta</a>
+                <small id="accountStatus" class="account-status" role="status" aria-live="polite"></small>
+            </form>
+        </div>
     </section>
 
     <!-- FAQ -->
@@ -328,16 +334,16 @@
             <h2 class="headline-lg text-center">Perguntas Frequentes</h2>
             <div class="faq-grid">
                 <div class="faq-item">
-                    <h3 class="title-md">O hAPPy cobra alguma taxa dos pais pelo serviço?</h3>
-                    <p class="body-sm">Não. A nossa curadoria e o planejamento do orçamento unificado são 100% gratuitos para os pais. Nós negociamos pacotes de volume direto com os prestadores de serviço e comércios parceiros.</p>
+                    <h3 class="title-md">O Happy cobra alguma taxa dos pais pelo orçamento?</h3>
+                    <p class="body-sm">Não. O planejamento da festa e envio do orçamento são 100% gratuitos. Nós negociamos direto com os prestadores de serviço e comércios parceiros na sua região.</p>
                 </div>
                 <div class="faq-item">
                     <h3 class="title-md">Como vocês garantem que os fornecedores são de confiança?</h3>
-                    <p class="body-sm">Todos os fornecedores parceiros passam por um critério rigoroso de seleção. Verificamos o histórico de entregas, pontualidade, qualidade dos materiais e avaliações reais de outros clientes na Grande São Paulo.</p>
+                    <p class="body-sm">Todos os fornecedores parceiros passam por um critério rigoroso de seleção. Verificamos o histórico de entregas, pontualidade, qualidade dos materiais e avaliações reais de outros clientes.</p>
                 </div>
                 <div class="faq-item">
                     <h3 class="title-md">E se um fornecedor atrasar ou faltar no dia da festa?</h3>
-                    <p class="body-sm">Essa é a nossa maior vantagem. O contrato da sua festa é conosco. Caso ocorra qualquer imprevisto com qualquer parceiro, nossa equipe aciona imediatamente outro fornecedor parceiro.</p>
+                    <p class="body-sm">Essa é a nossa maior vantagem. O contrato da sua festa é conosco. Caso ocorra qualquer imprevisto com qualquer parceiro, nossa equipe aciona imediatamente outro fornecedor parceiro. Se não for possivel devolvemos o valor pago pelo serviço faltante.</p>
                 </div>
             </div>
         </div>
@@ -347,7 +353,7 @@
     <section class="cta-section" data-screen="inicio">
         <div class="content-container">
             <h2 class="headline-lg text-center">🥳 Pronto para planejar sua próxima festa?</h2>
-            <a href="#explorar" class="btn-primary-lg">SIMULAR MINHA FESTA GRÁTIS</a>
+            <a href="#explorar" class="btn-primary-lg">SIMULAR FESTA GRÁTIS</a>
         </div>
     </section>
 

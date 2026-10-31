@@ -6,6 +6,16 @@ const periodoSelect = document.getElementById('periodo');
 const customTimeFields = document.getElementById('customTimeFields');
 const horaInicioInput = document.getElementById('hora_inicio');
 const horaTerminoInput = document.getElementById('hora_termino');
+const accountForm = document.getElementById('accountForm');
+const accountInputs = ['nome', 'celular', 'email', 'cpf', 'nascimento']
+    .map((id) => document.getElementById(id));
+const nascimentoInput = document.getElementById('nascimento');
+const saveAccountButton = document.getElementById('saveAccountButton');
+const deleteAccountLink = document.getElementById('deleteAccountLink');
+const accountStatus = document.getElementById('accountStatus');
+const accountStorageKey = 'happy.user.account';
+const partyForm = document.getElementById('partyForm');
+const requestQuoteButton = document.getElementById('requestQuoteButton');
 const addressFields = document.getElementById('addressFields');
 const cepInput = document.getElementById('cep');
 const cepStatus = document.getElementById('cepStatus');
@@ -186,6 +196,7 @@ async function lookupCep() {
         document.getElementById('cidade').value = address.localidade || '';
         document.getElementById('estado').value = address.uf || '';
         setAddressStatus('Endereço preenchido. Confira os dados e informe o número.');
+        document.getElementById('numero').focus();
     } catch (error) {
         if (requestId !== cepRequestId) return;
         console.error('Não foi possível consultar o CEP:', error);
@@ -207,26 +218,159 @@ cepInput.addEventListener('input', function() {
 updateAddressVisibility();
 updateCustomTimeVisibility();
 
-// Manipulando o envio do formulário consolidado
-document.getElementById('partyForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+function getLatestAllowedBirthDate() {
+    const now = new Date();
+    const month = now.getMonth();
+    const date = new Date(now.getFullYear() - 18, month, now.getDate());
+    if (date.getMonth() !== month) date.setDate(0);
 
-    const numeroWhatsAppSuporte = "5511989580867"; // Altere para seu número real com DDD
+    const year = date.getFullYear();
+    const monthText = String(date.getMonth() + 1).padStart(2, '0');
+    const dayText = String(date.getDate()).padStart(2, '0');
+    return `${year}-${monthText}-${dayText}`;
+}
 
-    // Capturando os inputs textuais e numéricos
-    const nome = document.getElementById('nome').value.trim();
-    const evento = document.getElementById('evento').value.trim();
-    const dataInput = document.getElementById('data').value;
-    const periodo = periodoSelect.value === 'Outro horário'
+function validateBirthDate() {
+    nascimentoInput.setCustomValidity(
+        nascimentoInput.value && nascimentoInput.value > nascimentoInput.max
+            ? 'É necessário ter pelo menos 18 anos.'
+            : ''
+    );
+}
+
+function setAccountStatus(message, isError = false) {
+    accountStatus.textContent = message;
+    accountStatus.classList.toggle('is-error', isError);
+}
+
+function setAccountSavedState(isSaved) {
+    saveAccountButton.hidden = isSaved;
+    deleteAccountLink.hidden = !isSaved;
+    accountInputs.forEach((input) => {
+        input.readOnly = isSaved;
+    });
+}
+
+nascimentoInput.max = getLatestAllowedBirthDate();
+nascimentoInput.addEventListener('input', validateBirthDate);
+
+try {
+    const savedAccount = localStorage.getItem(accountStorageKey);
+    if (savedAccount) {
+        const accountData = JSON.parse(savedAccount);
+        accountInputs.forEach((input) => {
+            if (typeof accountData[input.id] === 'string') {
+                input.value = accountData[input.id];
+            }
+        });
+        setAccountSavedState(true);
+        setAccountStatus('Seus dados pessoais estão salvos neste navegador.');
+    }
+} catch (error) {
+    console.error('Não foi possível carregar os dados da conta:', error);
+    setAccountStatus('Não foi possível carregar os dados salvos da conta.', true);
+}
+
+accountForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    validateBirthDate();
+    if (!accountForm.reportValidity()) return;
+
+    const accountData = Object.fromEntries(
+        accountInputs.map((input) => [input.id, input.value.trim()])
+    );
+
+    try {
+        localStorage.setItem(accountStorageKey, JSON.stringify(accountData));
+        setAccountSavedState(true);
+        setAccountStatus('Dados salvos neste navegador.');
+    } catch (error) {
+        console.error('Não foi possível salvar os dados da conta:', error);
+        setAccountStatus('Não foi possível salvar os dados. Verifique o armazenamento do navegador e tente novamente.', true);
+    }
+});
+
+deleteAccountLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    try {
+        localStorage.removeItem(accountStorageKey);
+        accountForm.reset();
+        setAccountSavedState(false);
+        setAccountStatus('Conta excluída deste navegador.');
+    } catch (error) {
+        console.error('Não foi possível excluir os dados da conta:', error);
+        setAccountStatus('Não foi possível excluir os dados da conta. Tente novamente.', true);
+    }
+});
+
+function getSavedAccount() {
+    try {
+        const savedAccount = localStorage.getItem(accountStorageKey);
+        if (!savedAccount) return null;
+
+        const accountData = JSON.parse(savedAccount);
+        if (!accountData || typeof accountData !== 'object') return null;
+        return accountData;
+    } catch (error) {
+        console.error('Não foi possível ler os dados da conta para solicitar o orçamento:', error);
+        setAccountStatus('Não foi possível acessar os dados da conta. Tente novamente.', true);
+        return null;
+    }
+}
+
+function hasRequiredAccountData(accountData) {
+    return accountData
+        && ['nome', 'celular', 'email', 'nascimento'].every((field) => (
+            typeof accountData[field] === 'string' && accountData[field].trim()
+        ));
+}
+
+function requireSavedAccount(event) {
+    const accountData = getSavedAccount();
+    if (hasRequiredAccountData(accountData)) return accountData;
+
+    event.preventDefault();
+    setAccountStatus('Preencha e salve seus dados pessoais antes de solicitar o orçamento.');
+    window.location.hash = 'conta';
+    return null;
+}
+
+requestQuoteButton.addEventListener('click', (event) => {
+    requireSavedAccount(event);
+});
+
+function formatBrazilianDate(value) {
+    if (!value) return '';
+    const [year, month, day] = value.split('-');
+    return `${day}/${month}/${year}`;
+}
+
+function getSelectedServicesByCategory() {
+    const selectedServices = Array.from(serviceCards)
+        .filter((card) => card.classList.contains('is-selected'));
+    if (selectedServices.length === 0) return 'Nenhum serviço específico (curadoria geral)';
+
+    const categories = new Map();
+    selectedServices.forEach((card) => {
+        const category = card.dataset.category;
+        if (!categories.has(category)) categories.set(category, []);
+        categories.get(category).push(card.dataset.service);
+    });
+
+    return Array.from(categories, ([category, services]) => (
+        `${category}: ${services.join(', ')}`
+    )).join('\n');
+}
+
+partyForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const accountData = requireSavedAccount(event);
+    if (!accountData || !partyForm.reportValidity()) return;
+
+    const period = periodoSelect.value === 'Outro horário'
         ? `Outro horário (${horaInicioInput.value} às ${horaTerminoInput.value})`
         : periodoSelect.value;
-    const idade = document.getElementById('idade').value;
-    const tema = document.getElementById('tema').value.trim();
-    const adultos = document.getElementById('adultos').value;
-    const criancas = document.getElementById('criancas').value;
-    const localTipo = document.getElementById('local_tipo').value;
-    const orcamentoDefinido = slider ? slider.value : "3500";
-    const endereco = addressLocations.includes(localTipo)
+    const venueAddress = addressLocations.includes(localTipoSelect.value)
         ? [
             document.getElementById('logradouro').value.trim(),
             document.getElementById('numero').value.trim(),
@@ -234,37 +378,40 @@ document.getElementById('partyForm').addEventListener('submit', function(e) {
             document.getElementById('bairro').value.trim(),
             document.getElementById('cidade').value.trim(),
             document.getElementById('estado').value.trim(),
-            document.getElementById('cep').value.trim()
+            cepInput.value.trim()
         ].filter(Boolean).join(', ')
         : '';
+    const budget = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        maximumFractionDigits: 0
+    }).format(Number(slider.value));
+    const message = [
+        'Olá, Happy! Gostaria de solicitar um orçamento para minha festa.',
+        '',
+        '*DADOS PESSOAIS*',
+        `Nome: ${accountData.nome.trim()}`,
+        `Celular: ${accountData.celular.trim()}`,
+        `E-mail: ${accountData.email.trim()}`,
+        ...(accountData.cpf ? [`CPF: ${accountData.cpf.trim()}`] : []),
+        `Data de nascimento: ${formatBrazilianDate(accountData.nascimento)}`,
+        '',
+        '*DADOS DA FESTA*',
+        `Evento: ${document.getElementById('evento').value.trim()}`,
+        `Data: ${formatBrazilianDate(document.getElementById('data').value)}`,
+        `Período: ${period}`,
+        `Idade do(a) aniversariante: ${document.getElementById('idade').value} anos`,
+        `Tema: ${document.getElementById('tema').value.trim()}`,
+        `Convidados: ${document.getElementById('adultos').value} adultos e ${document.getElementById('criancas').value} crianças`,
+        `Local: ${localTipoSelect.value}`,
+        ...(venueAddress ? [`Endereço: ${venueAddress}`] : []),
+        '',
+        '*SERVIÇOS SELECIONADOS*',
+        getSelectedServicesByCategory(),
+        '',
+        `Orçamento limite estimado: ${budget}`
+    ].join('\n');
 
-    // Coletando múltiplos checkboxes de serviços de forma linear
-    const servicosSelecionados = Array.from(serviceCards)
-        .filter((card) => card.classList.contains('is-selected'))
-        .map((card) => card.dataset.service);
-    
-    // Tratativa caso nenhum serviço seja clicado
-    const listaServicos = servicosSelecionados.length > 0 ? servicosSelecionados.join(', ') : "Apenas Curadoria Geral";
-
-    // Formatando data para o modelo brasileiro (DD/MM/AAAA)
-    let dataFormatada = dataInput;
-    if (dataInput) {
-        const partesData = dataInput.split('-');
-        dataFormatada = `${partesData[2]}/${partesData[1]}/${partesData[0]}`;
-    }
-
-    // Criando a mensagem final limpa e profissional
-    const mensagemTexto = `Olá hAPPy! Completei o planejamento da festa no site. Aqui estão todas as minhas variáveis:\n\n` +
-                          `👤 *Responsável:* ${nome}\n` +
-                          `🎉 *Evento:* ${evento}\n` +
-                          `📅 *Data e Período:* ${dataFormatada} (${periodo})\n` +
-                          `🎂 *Aniversariante:* ${idade} anos | *Tema:* ${tema}\n` +
-                          `👥 *Convidados:* ${adultos} Adultos e ${criancas} Crianças\n` +
-                          `🏠 *Local da Festa:* ${localTipo}\n` +
-                          (endereco ? `📍 *Endereço:* ${endereco}\n` : '') +
-                          `🛠️ *Serviços Solicitados:* ${listaServicos}\n` +
-                          `💰 *Orçamento Limite:* R$ ${parseInt(orcamentoDefinido).toLocaleString('pt-BR')}`;
-
-    const urlFinalWhatsApp = `https://wa.me/${numeroWhatsAppSuporte}?text=${encodeURIComponent(mensagemTexto)}`;
-    window.location.assign(urlFinalWhatsApp);
+    const whatsappUrl = `https://wa.me/5511989580867?text=${encodeURIComponent(message)}`;
+    window.location.assign(whatsappUrl);
 });
