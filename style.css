@@ -464,7 +464,7 @@ body {
 }
 
 /* Forms Elements */
-.form-section { padding: 4rem 1.25rem; display: flex; justify-content: center; }
+.form-section { padding: 3rem 1.25rem; display: flex; justify-content: center; }
 .form-card {
     background: var(--surface);
     border-radius: var(--radius-lg);

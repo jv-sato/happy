@@ -232,7 +232,7 @@ function getLatestAllowedBirthDate() {
 
 function validateBirthDate() {
     nascimentoInput.setCustomValidity(
-        nascimentoInput.value && nascimentoInput.value > nascimentoInput.max
+        nascimentoInput.value && nascimentoInput.value > getLatestAllowedBirthDate()
             ? 'É necessário ter pelo menos 18 anos.'
             : ''
     );
@@ -251,8 +251,8 @@ function setAccountSavedState(isSaved) {
     });
 }
 
-nascimentoInput.max = getLatestAllowedBirthDate();
 nascimentoInput.addEventListener('input', validateBirthDate);
+nascimentoInput.addEventListener('change', validateBirthDate);
 
 try {
     const savedAccount = localStorage.getItem(accountStorageKey);
@@ -283,7 +283,7 @@ accountForm.addEventListener('submit', (event) => {
     try {
         localStorage.setItem(accountStorageKey, JSON.stringify(accountData));
         setAccountSavedState(true);
-        setAccountStatus('Dados salvos neste navegador.');
+        setAccountStatus('🔒 Seus dados estão protegidos em conformidade com a LGPD e serão utilizados exclusivamente para a elaboração do orçamento e execução da sua festa.');
     } catch (error) {
         console.error('Não foi possível salvar os dados da conta:', error);
         setAccountStatus('Não foi possível salvar os dados. Verifique o armazenamento do navegador e tente novamente.', true);
@@ -296,7 +296,7 @@ deleteAccountLink.addEventListener('click', (event) => {
         localStorage.removeItem(accountStorageKey);
         accountForm.reset();
         setAccountSavedState(false);
-        setAccountStatus('Conta excluída deste navegador.');
+        setAccountStatus('Conta excluida com sucesso.');
     } catch (error) {
         console.error('Não foi possível excluir os dados da conta:', error);
         setAccountStatus('Não foi possível excluir os dados da conta. Tente novamente.', true);
