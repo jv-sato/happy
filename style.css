@@ -46,6 +46,7 @@ body {
     color: var(--on-surface);
     overflow-x: hidden;
     line-height: 1.5;
+    padding-bottom: calc(3.75rem + env(safe-area-inset-bottom));
 }
 
 /* Typography Hierarchy */
@@ -155,6 +156,43 @@ body {
     cursor: pointer;
     z-index: 2;
 }
+.menu-toggle[hidden],
+.share-app-button[hidden] { display: none; }
+.share-app-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.5rem 0.85rem;
+    color: var(--secondary);
+    background: transparent;
+    border: 1px solid #ece8fd;
+    border-radius: var(--radius-full);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.share-app-button:hover,
+.share-app-button:focus-visible { background: #f3edff; }
+.share-app-button:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; }
+.share-app-button svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.share-app-status {
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    right: 1.25rem;
+    color: var(--secondary);
+    font-size: 12px;
+}
 .menu-toggle:hover,
 .menu-toggle:focus-visible { background: #f3edff; }
 .menu-toggle:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; }
@@ -201,7 +239,48 @@ body {
     letter-spacing: -0.02em;
 }
 .logo-slogan { font-size: 11px; font-weight: 500; opacity: 0.6; }
-.bottom-nav { display: none; }
+.bottom-nav {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 110;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 1rem calc(0.5rem + env(safe-area-inset-bottom));
+    background: var(--surface);
+    border-top: 1px solid #ece8fd;
+    box-shadow: 0 -4px 16px rgba(26, 16, 61, 0.06);
+}
+.bottom-nav-link {
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.25rem 1rem;
+    color: #6f6685;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+}
+.bottom-nav-link svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.bottom-nav-link[aria-current="page"] { color: var(--secondary); }
+.bottom-nav-link:focus-visible {
+    border-radius: 8px;
+    outline: 2px solid var(--secondary);
+    outline-offset: 3px;
+}
 [data-screen][hidden] { display: none !important; }
 
 .app-page {
@@ -363,6 +442,34 @@ body {
 .account-page .delete-account-link[hidden] { display: none; }
 .delete-account-link:focus-visible { outline: 2px solid var(--outline-focus); outline-offset: 4px; }
 
+.install-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    width: min(440px, calc(100% - 2rem));
+    padding: 0;
+    color: var(--on-surface);
+    background: var(--surface);
+    border: 0;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 80px rgba(26, 16, 61, 0.28);
+}
+.install-dialog::backdrop { background: rgba(26, 16, 61, 0.55); }
+.install-dialog-content { padding: 2rem; text-align: center; }
+.install-dialog-icon { width: 72px; height: 72px; margin-bottom: 1rem; border-radius: 18px; }
+.install-dialog .headline-md { margin-bottom: 0.75rem; }
+.install-dialog .body-sm { margin-bottom: 0; }
+.install-dialog-help { margin: 1rem 0 0; color: #6f6685; font-size: 14px; line-height: 1.5; }
+.install-dialog-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+.install-dialog-actions button { flex: 1; margin: 0; cursor: pointer; }
+.install-dismiss {
+    border: 0;
+    font-family: inherit;
+}
+.install-confirm { padding: 0.75rem 1rem; font-size: 14px; }
+
 /* Buttons Style */
 .btn-primary-lg, .btn-primary-block {
     display: inline-block;
@@ -408,7 +515,7 @@ body {
     color: var(--on-surface);
     background:
         linear-gradient(rgba(253, 247, 255, 0.82), rgba(253, 247, 255, 0.82)),
-        url("assets/background") center / cover no-repeat;
+        url("assets/background.jpeg") center / cover no-repeat;
 }
 .hero-container { max-width: 800px; margin: 0 auto; }
 .cta-section {
@@ -612,50 +719,13 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .footer .body-xs { font-size: 12px; color: rgba(255, 255, 255, 0.6); max-width: 600px; margin: 0 auto; }
 
 @media (max-width: 767px) {
-    .app-page { padding-bottom: 6rem; }
-    .bottom-nav {
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 110;
-        display: flex;
-        justify-content: space-around;
-        padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom));
-        background: var(--surface);
-        border-top: 1px solid #ece8fd;
-        box-shadow: 0 -4px 16px rgba(26, 16, 61, 0.06);
-    }
     .bottom-nav-link {
         min-width: 0;
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.25rem;
-        color: #6f6685;
+        padding: 0.25rem 0.5rem;
         font-size: 11px;
-        font-weight: 600;
-        line-height: 1.2;
-        text-decoration: none;
     }
-    .bottom-nav-link svg {
-        width: 22px;
-        height: 22px;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 1.8;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-    }
-    .bottom-nav-link[aria-current="page"] { color: var(--secondary); }
-    .bottom-nav-link:focus-visible {
-        border-radius: 8px;
-        outline: 2px solid var(--secondary);
-        outline-offset: 3px;
-    }
-    .footer { padding-bottom: calc(3rem + 68px + env(safe-area-inset-bottom)); }
+    .footer { padding-bottom: calc(3rem + 68px); }
 }
 
 /* Responsive Media Queries (Desktop Adaptation) */
@@ -666,4 +736,5 @@ input[type="range"]::-webkit-slider-thumb:hover {
     .steps-grid { flex-direction: row; }
     .step-card { flex: 1; }
     .form-card { padding: 3rem; }
+    .footer { padding-bottom: 5rem; }
 }

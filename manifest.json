@@ -1,0 +1,24 @@
+{
+  "id": "./index.html",
+  "name": "Happy - Sua festa organizada",
+  "short_name": "Happy",
+  "description": "Organize sua festa, escolha serviços e solicite seu orçamento.",
+  "lang": "pt-BR",
+  "start_url": "./index.html#inicio",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fdf7ff",
+  "theme_color": "#5e17eb",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -29,6 +29,14 @@ const serviceCards = document.querySelectorAll('.service-card[data-service]');
 const selectedServicesContainer = document.getElementById('selectedServices');
 const screenSections = document.querySelectorAll('[data-screen]');
 const screenLinks = document.querySelectorAll('[data-nav-screen]');
+const installDialog = document.getElementById('installDialog');
+const installDialogMessage = document.getElementById('installDialogMessage');
+const installDialogHelp = document.getElementById('installDialogHelp');
+const confirmInstallButton = document.getElementById('confirmInstall');
+const dismissInstallButton = document.getElementById('dismissInstallDialog');
+const shareAppButton = document.getElementById('shareAppButton');
+const shareAppStatus = document.getElementById('shareAppStatus');
+let deferredInstallPrompt = null;
 
 function getScreenFromHash() {
     const requestedScreen = window.location.hash.slice(1);
@@ -39,6 +47,8 @@ function getScreenFromHash() {
 
 function renderScreen() {
     const activeScreen = getScreenFromHash();
+    menuToggle.hidden = activeScreen === 'inicio';
+    shareAppButton.hidden = activeScreen !== 'inicio';
     screenSections.forEach((section) => {
         section.hidden = section.dataset.screen !== activeScreen;
     });
@@ -415,3 +425,97 @@ partyForm.addEventListener('submit', (event) => {
     const whatsappUrl = `https://wa.me/5511989580867?text=${encodeURIComponent(message)}`;
     window.location.assign(whatsappUrl);
 });
+
+function isAppInstalled() {
+    return window.matchMedia('(display-mode: standalone)').matches
+        || window.navigator.standalone === true;
+}
+
+function showInstallDialog() {
+    if (isAppInstalled() || sessionStorage.getItem('happy.install-prompt-dismissed')) return;
+    installDialog.showModal();
+}
+
+function showInstallInstructions() {
+    installDialogHelp.hidden = false;
+    if (window.location.protocol === 'file:') {
+        installDialogHelp.textContent = 'Para instalar o Happy, acesse o site por um endereço HTTPS. A instalação não funciona abrindo o arquivo diretamente.';
+    } else if (/iphone|ipad|ipod/i.test(window.navigator.userAgent)) {
+        installDialogHelp.textContent = 'No Safari, toque em Compartilhar e depois em “Adicionar à Tela de Início”.';
+    } else {
+        installDialogHelp.textContent = 'Abra o menu do navegador e escolha “Instalar aplicativo” ou “Adicionar à tela inicial”.';
+    }
+}
+
+window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    confirmInstallButton.textContent = 'Instalar Happy';
+});
+
+window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    installDialog.close();
+});
+
+confirmInstallButton.addEventListener('click', async () => {
+    if (!deferredInstallPrompt) {
+        showInstallInstructions();
+        return;
+    }
+
+    deferredInstallPrompt.prompt();
+    const { outcome } = await deferredInstallPrompt.userChoice;
+    if (outcome === 'accepted') installDialog.close();
+    deferredInstallPrompt = null;
+});
+
+dismissInstallButton.addEventListener('click', () => {
+    sessionStorage.setItem('happy.install-prompt-dismissed', 'true');
+    installDialog.close();
+});
+
+installDialog.addEventListener('click', (event) => {
+    if (event.target !== installDialog) return;
+    sessionStorage.setItem('happy.install-prompt-dismissed', 'true');
+    installDialog.close();
+});
+
+shareAppButton.addEventListener('click', async () => {
+    const shareData = {
+        title: 'Happy',
+        text: 'Organize sua festa com o Happy!',
+        url: window.location.href.split('#')[0]
+    };
+
+    try {
+        if (navigator.share) {
+            await navigator.share(shareData);
+            return;
+        }
+
+        if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(shareData.url);
+            shareAppStatus.textContent = 'Link copiado!';
+            window.setTimeout(() => {
+                shareAppStatus.textContent = '';
+            }, 3000);
+            return;
+        }
+
+        window.prompt('Copie o link do Happy para compartilhar:', shareData.url);
+    } catch (error) {
+        if (error.name === 'AbortError') return;
+        console.error('Não foi possível compartilhar o Happy:', error);
+        shareAppStatus.textContent = 'Não foi possível compartilhar o link.';
+    }
+});
+
+if ('serviceWorker' in navigator && window.isSecureContext) {
+    navigator.serviceWorker.register('./service-worker.js')
+        .catch((error) => console.error('Não foi possível registrar o service worker:', error));
+}
+
+window.addEventListener('load', () => {
+    window.setTimeout(showInstallDialog, 800);
+}, { once: true });

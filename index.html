@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy</title>
+    <meta name="theme-color" content="#5e17eb">
+    <meta name="description" content="Organize sua festa com o Happy: escolha serviços, planeje os detalhes e solicite seu orçamento.">
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+    <link rel="manifest" href="manifest.json">
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +25,16 @@
                     <img src="assets/logo.png" alt="hAPPy Logo" class="logo">
                 </a>
             </div>
+            <button class="share-app-button" id="shareAppButton" type="button" aria-label="Compartilhar Happy" hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <path d="m8.7 10.6 6.6-4.2m-6.6 7 6.6 4.2"></path>
+                </svg>
+                <span>Compartilhar</span>
+            </button>
+            <span class="share-app-status" id="shareAppStatus" role="status" aria-live="polite"></span>
             <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="navbarMenu">
                 <span></span>
                 <span></span>
@@ -40,7 +55,7 @@
             <h1 class="display-hero">Sua festa completa, organizada e dentro do orçamento.</h1>
             <p class="body-lg">No Happy você resolve tudo em um único lugar!</p>
             <a href="#explorar" class="btn-primary-lg">SIMULAR FESTA GRÁTIS</a>
-            <span class="microcopy"><strong>Leva menos de 2 minutos. Sem compromisso.</strong></span>
+            <span class="microcopy">Leva menos de 2 minutos. Sem compromisso.</span>
         </div>
     </section>
 
@@ -48,7 +63,7 @@
     <section class="problem-solution" data-screen="inicio">
         <div class="content-container">
             <h2 class="headline-lg">Chega de passar dias planejando e organizando uma festa.</h2>
-            <p class="body-sm">Isso deveria ser um momento de alegria, mas acaba virando uma dor de cabeça. São dezenas de ligações e mensagens no WhatsApp para cobrar orçamentos e entregas. No final, você ainda precisa lidar com fretes separados, múltiplos pagamentos e o medo de algo faltar ou dar errado no dia.</p><br>
+            <p class="body-sm">Isso deveria ser um momento de alegria, mas acaba virando uma dor de cabeça. São dezenas de ligações e mensagens para cobrar orçamentos e entregas. No final, você ainda precisa lidar com diversos prestadores separados, múltiplos pagamentos e o medo de algo faltar ou dar errado no dia.</p><br>
             <p class="body-md highlight-text">O Happy foi criado para absorver toda essa burocracia para que você só precise se preocupar em aproveitar esse momento especial.</p>
         </div>
     </section>
@@ -366,6 +381,7 @@
      class="logo">
             </div>
         <p class="body-sm">© 2026 Happy Tecnologia de Eventos.<br>Todos os direitos reservados.</p>
+        <small style="font-size: 8px;">Rua Anita Costa Leite, nº 372 - Mogi das Cruzes/SP - CEP 08717-300</small>    
     </footer>
 
     <nav class="bottom-nav" aria-label="Navegação inferior">
@@ -397,6 +413,19 @@
             <span>Conta</span>
         </a>
     </nav>
+
+    <dialog class="install-dialog" id="installDialog" aria-labelledby="installDialogTitle">
+        <div class="install-dialog-content">
+            <img src="assets/icon.png" alt="" class="install-dialog-icon">
+            <h2 class="headline-md" id="installDialogTitle">Tenha o Happy no seu celular</h2>
+            <p class="body-sm" id="installDialogMessage">Instale o aplicativo para acessar sua festa com mais facilidade.</p>
+            <p class="install-dialog-help" id="installDialogHelp" hidden></p>
+            <div class="install-dialog-actions">
+                <button class="btn-secondary-sm install-dismiss" id="dismissInstallDialog" type="button">Agora não</button>
+                <button class="btn-primary-block install-confirm" id="confirmInstall" type="button">Instalar Happy</button>
+            </div>
+        </div>
+    </dialog>
 
     <script src="script.js"></script>
 </body>
