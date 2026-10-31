@@ -1,4 +1,4 @@
-const CACHE_NAME = 'happy-pwa-v2';
+const CACHE_NAME = 'happy-pwa-v5';
 const APP_SHELL = [
     './',
     './index.html',

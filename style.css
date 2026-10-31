@@ -426,9 +426,18 @@ body {
     border-top: 1px solid #ece8fd;
 }
 .party-details > .headline-md { margin-bottom: 1.25rem; }
+.app-next-button[hidden] { display: none; }
+.party-storage-status { display: block; margin: 0 0 1rem; text-align: center; }
+.party-storage-status:empty { display: none; }
+.party-storage-status.is-error { color: #b42318; }
 .account-page { padding-top: 3rem; }
 .account-page .form-card { max-width: 650px; }
 .account-page .headline-lg { font-size: 30px; }
+.saved-party-request { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #ece8fd; }
+.saved-party-request-details { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.75rem; }
+.saved-party-request-details dt { font-weight: 700; }
+.saved-party-request-details dd { margin: 0; color: #6f6685; white-space: pre-line; }
+.saved-party-request #editSavedPartyRequest[hidden] { display: none; }
 .account-status { display: block; margin-top: 1rem; text-align: center; }
 .account-status:empty { display: none; }
 .account-status.is-error { color: #b42318; }
@@ -714,7 +723,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .faq-item { border-bottom: 1px solid #ece8fd; padding-bottom: 1.5rem; }
 .faq-item:last-child { border-bottom: none; }
 
-.footer { background: #5e17eb; color: #ffffff; text-align: center; padding: 3rem 1.25rem; }
+.footer { background: #5e17eb; color: #ffffff; text-align: center; padding: 3rem 1.25rem 1.5rem; }
 .footer .body-sm { margin-bottom: 0.5rem; color: #ffffff; opacity: 0.9; }
 .footer .body-xs { font-size: 12px; color: rgba(255, 255, 255, 0.6); max-width: 600px; margin: 0 auto; }
 
@@ -725,7 +734,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
         padding: 0.25rem 0.5rem;
         font-size: 11px;
     }
-    .footer { padding-bottom: calc(3rem + 68px); }
+    .footer { padding-bottom: calc(1.5rem + 68px); }
 }
 
 /* Responsive Media Queries (Desktop Adaptation) */
@@ -736,5 +745,5 @@ input[type="range"]::-webkit-slider-thumb:hover {
     .steps-grid { flex-direction: row; }
     .step-card { flex: 1; }
     .form-card { padding: 3rem; }
-    .footer { padding-bottom: 5rem; }
+    .footer { padding-bottom: 2rem; }
 }

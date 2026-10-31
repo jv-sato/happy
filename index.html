@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy</title>
+    <title>Sua festa completa, organizada e dentro do orçamento. | hAPPy</title>
     <meta name="theme-color" content="#5e17eb">
-    <meta name="description" content="Organize sua festa com o Happy: escolha serviços, planeje os detalhes e solicite seu orçamento.">
+    <meta name="description" content="Sua festa completa, organizada e dentro do orçamento. | hAPPy">
     <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon.png">
     <link rel="apple-touch-icon" href="assets/icon.png">
     <link rel="manifest" href="manifest.json">
@@ -21,7 +21,7 @@
     <header class="navbar">
         <div class="navbar-container">
             <div class="logo-area">
-                <a href="#inicio" aria-label="Happy- início">
+                <a href="#inicio" aria-label="hAPPy - início">
                     <img src="assets/logo.png" alt="hAPPy Logo" class="logo">
                 </a>
             </div>
@@ -53,7 +53,7 @@
     <section class="hero" id="inicio" data-screen="inicio">
         <div class="hero-container">
             <h1 class="display-hero">Sua festa completa, organizada e dentro do orçamento.</h1>
-            <p class="body-lg">No Happy você resolve tudo em um único lugar!</p>
+            <p class="body-lg">No hAPPy você resolve tudo em um único lugar!</p>
             <a href="#explorar" class="btn-primary-lg">SIMULAR FESTA GRÁTIS</a>
             <span class="microcopy">Leva menos de 2 minutos. Sem compromisso.</span>
         </div>
@@ -64,7 +64,7 @@
         <div class="content-container">
             <h2 class="headline-lg">Chega de passar dias planejando e organizando uma festa.</h2>
             <p class="body-sm">Isso deveria ser um momento de alegria, mas acaba virando uma dor de cabeça. São dezenas de ligações e mensagens para cobrar orçamentos e entregas. No final, você ainda precisa lidar com diversos prestadores separados, múltiplos pagamentos e o medo de algo faltar ou dar errado no dia.</p><br>
-            <p class="body-md highlight-text">O Happy foi criado para absorver toda essa burocracia para que você só precise se preocupar em aproveitar esse momento especial.</p>
+            <p class="body-md highlight-text">O hAPPy foi criado para absorver toda essa burocracia para que você só precise se preocupar em aproveitar esse momento especial.</p>
         </div>
     </section>
 
@@ -194,6 +194,7 @@
             <h1 class="headline-lg">Minha Festa</h1>
             <p class="body-sm form-subtitle">Confira os serviços escolhidos e ajuste seu orçamento estimado.</p>
             <div id="selectedServices" class="selected-services" aria-live="polite"></div>
+            <small id="partyStorageStatus" class="party-storage-status" role="status" aria-live="polite"></small>
             <a href="#explorar" class="btn-secondary-sm">ADICIONAR SERVIÇOS</a>
             <div class="input-group party-budget">
                 <label class="label-md" for="orcamento_range">Orçamento limite estimado</label>
@@ -207,7 +208,7 @@
             </div>
 
             <form id="partyForm">
-            <section class="party-details" aria-labelledby="party-details-title">
+            <section class="party-details" aria-labelledby="party-details-title" hidden>
                 <h2 class="headline-md" id="party-details-title">Dados da festa</h2>
                 <div class="input-group">
                     <label class="label-md" for="evento">Nome do evento</label>
@@ -305,14 +306,14 @@
                 </div>
             </section>
             </form>
-            <button type="submit" form="partyForm" id="requestQuoteButton" class="btn-primary-block app-next-button">SOLICITAR ORÇAMENTO</button>
+            <button type="submit" form="partyForm" id="requestQuoteButton" class="btn-primary-block app-next-button" hidden>SOLICITAR ORÇAMENTO</button>
         </div>
     </section>
 
     <section id="conta" class="form-section app-page account-page" data-screen="conta" hidden>
         <div class="form-card">
             <p class="app-eyebrow">Seus dados</p>
-            <h1 class="headline-lg">Conta</h1>
+            <h1 class="headline-lg" id="accountTitle">Conta</h1>
             <p class="body-sm form-subtitle">Informe seus dados pessoais.</p>
 
             <form id="accountForm">
@@ -340,6 +341,11 @@
                 <a href="#conta" id="deleteAccountLink" class="delete-account-link" hidden>Excluir conta</a>
                 <small id="accountStatus" class="account-status" role="status" aria-live="polite"></small>
             </form>
+            <section id="savedPartyRequest" class="saved-party-request" aria-labelledby="savedPartyRequestTitle" hidden>
+                <h2 class="headline-md" id="savedPartyRequestTitle">Último orçamento solicitado</h2>
+                <dl id="savedPartyRequestDetails" class="saved-party-request-details"></dl>
+                <button type="button" id="editSavedPartyRequest" class="btn-primary-block" hidden>EDITAR</button>
+            </section>
         </div>
     </section>
 
@@ -349,7 +355,7 @@
             <h2 class="headline-lg text-center">Perguntas Frequentes</h2>
             <div class="faq-grid">
                 <div class="faq-item">
-                    <h3 class="title-md">O Happy cobra alguma taxa dos pais pelo orçamento?</h3>
+                    <h3 class="title-md">O hAPPy cobra alguma taxa dos pais pelo orçamento?</h3>
                     <p class="body-sm">Não. O planejamento da festa e envio do orçamento são 100% gratuitos.</p>
                 </div>
                 <div class="faq-item">
@@ -367,7 +373,7 @@
     <!-- CTA -->
     <section class="cta-section" data-screen="inicio">
         <div class="content-container">
-            <h2 class="headline-lg text-center">🥳 Pronto para planejar sua próxima festa?</h2>
+            <h2 class="headline-lg text-center">🥳 Vamos planejar sua próxima festa?</h2>
             <a href="#explorar" class="btn-primary-lg">SIMULAR FESTA GRÁTIS</a>
         </div>
     </section>
@@ -381,7 +387,7 @@
      class="logo">
             </div>
         <p class="body-sm">© 2026 Happy Tecnologia de Eventos.<br>Todos os direitos reservados.</p>
-        <small style="font-size: 8px;">Rua Anita Costa Leite, nº 372 - Mogi das Cruzes/SP - CEP 08717-300</small>    
+        <small style="font-size: 8px;">Rua Anita Costa Leite, nº 372 - B3 AP31 - Mogi das Cruzes/SP - CEP 08717-300</small>    
     </footer>
 
     <nav class="bottom-nav" aria-label="Navegação inferior">

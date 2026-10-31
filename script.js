@@ -13,9 +13,16 @@ const nascimentoInput = document.getElementById('nascimento');
 const saveAccountButton = document.getElementById('saveAccountButton');
 const deleteAccountLink = document.getElementById('deleteAccountLink');
 const accountStatus = document.getElementById('accountStatus');
+const accountTitle = document.getElementById('accountTitle');
 const accountStorageKey = 'happy.user.account';
 const partyForm = document.getElementById('partyForm');
 const requestQuoteButton = document.getElementById('requestQuoteButton');
+const partyStorageStatus = document.getElementById('partyStorageStatus');
+const savedPartyRequest = document.getElementById('savedPartyRequest');
+const savedPartyRequestDetails = document.getElementById('savedPartyRequestDetails');
+const editSavedPartyRequestButton = document.getElementById('editSavedPartyRequest');
+const partyDraftStorageKey = 'happy.user.partyDraft';
+const partyRequestStorageKey = 'happy.user.partyRequest';
 const addressFields = document.getElementById('addressFields');
 const cepInput = document.getElementById('cep');
 const cepStatus = document.getElementById('cepStatus');
@@ -27,6 +34,7 @@ const menuToggle = document.querySelector('.menu-toggle');
 const navbarMenu = document.getElementById('navbarMenu');
 const serviceCards = document.querySelectorAll('.service-card[data-service]');
 const selectedServicesContainer = document.getElementById('selectedServices');
+const partyDetails = document.querySelector('.party-details');
 const screenSections = document.querySelectorAll('[data-screen]');
 const screenLinks = document.querySelectorAll('[data-nav-screen]');
 const installDialog = document.getElementById('installDialog');
@@ -47,6 +55,7 @@ function getScreenFromHash() {
 
 function renderScreen() {
     const activeScreen = getScreenFromHash();
+    window.scrollTo(0, 0);
     menuToggle.hidden = activeScreen === 'inicio';
     shareAppButton.hidden = activeScreen !== 'inicio';
     screenSections.forEach((section) => {
@@ -63,6 +72,10 @@ function renderScreen() {
 
 function renderSelectedServices() {
     const selectedServices = Array.from(serviceCards).filter((card) => card.classList.contains('is-selected'));
+    const hasSelectedServices = selectedServices.length > 0;
+    partyDetails.hidden = !hasSelectedServices;
+    requestQuoteButton.hidden = !hasSelectedServices;
+
     serviceCards.forEach((card) => {
         const selected = card.classList.contains('is-selected');
         const button = card.querySelector('.service-add-button');
@@ -111,6 +124,7 @@ serviceCards.forEach((card) => {
     card.querySelector('.service-add-button').addEventListener('click', () => {
         card.classList.toggle('is-selected');
         renderSelectedServices();
+        savePartyDraft();
     });
 });
 
@@ -153,8 +167,8 @@ document.addEventListener('keydown', function(event) {
 
 if(slider && visualValue) {
     slider.addEventListener('input', function() {
-        // Atualiza o valor monetário formatado na tela em tempo real
         visualValue.textContent = `R$ ${parseInt(this.value).toLocaleString('pt-BR')}`;
+        savePartyDraft();
     });
 }
 
@@ -205,6 +219,7 @@ async function lookupCep() {
         document.getElementById('bairro').value = address.bairro || '';
         document.getElementById('cidade').value = address.localidade || '';
         document.getElementById('estado').value = address.uf || '';
+        savePartyDraft();
         setAddressStatus('Endereço preenchido. Confira os dados e informe o número.');
         document.getElementById('numero').focus();
     } catch (error) {
@@ -253,7 +268,134 @@ function setAccountStatus(message, isError = false) {
     accountStatus.classList.toggle('is-error', isError);
 }
 
+function setPartyStorageStatus(message, isError = false) {
+    partyStorageStatus.textContent = message;
+    partyStorageStatus.classList.toggle('is-error', isError);
+}
+
+function getPartyDraft() {
+    return {
+        fields: Object.fromEntries(
+            Array.from(partyForm.querySelectorAll('input, select, textarea'))
+                .map((input) => [input.id, input.value])
+        ),
+        selectedServices: Array.from(serviceCards)
+            .filter((card) => card.classList.contains('is-selected'))
+            .map((card) => card.dataset.service),
+        budget: slider.value
+    };
+}
+
+function savePartyDraft() {
+    try {
+        localStorage.setItem(partyDraftStorageKey, JSON.stringify(getPartyDraft()));
+        setPartyStorageStatus('Os dados da festa são salvos automaticamente neste navegador.');
+    } catch (error) {
+        console.error('Não foi possível salvar os dados da festa:', error);
+        setPartyStorageStatus('Não foi possível salvar os dados da festa. Verifique o armazenamento do navegador.', true);
+    }
+}
+
+function restorePartyDraft() {
+    try {
+        const savedDraft = localStorage.getItem(partyDraftStorageKey);
+        if (!savedDraft) return;
+
+        const draft = JSON.parse(savedDraft);
+        if (!draft || typeof draft !== 'object' || !draft.fields || typeof draft.fields !== 'object') {
+            throw new Error('Os dados salvos da festa estão em um formato inválido.');
+        }
+
+        applyPartyData(draft);
+    } catch (error) {
+        console.error('Não foi possível carregar os dados salvos da festa:', error);
+        setPartyStorageStatus('Não foi possível carregar os dados salvos da festa.', true);
+    }
+}
+
+function applyPartyData(partyData) {
+    Array.from(partyForm.querySelectorAll('input, select, textarea')).forEach((input) => {
+        if (typeof partyData.fields[input.id] === 'string') input.value = partyData.fields[input.id];
+    });
+    if (typeof partyData.budget === 'string' && Number(partyData.budget) >= Number(slider.min)
+        && Number(partyData.budget) <= Number(slider.max)) {
+        slider.value = partyData.budget;
+        visualValue.textContent = `R$ ${parseInt(slider.value).toLocaleString('pt-BR')}`;
+    }
+    if (Array.isArray(partyData.selectedServices)) {
+        serviceCards.forEach((card) => {
+            card.classList.toggle('is-selected', partyData.selectedServices.includes(card.dataset.service));
+        });
+    }
+
+    updateAddressVisibility();
+    updateCustomTimeVisibility();
+    renderSelectedServices();
+}
+
+function renderSavedPartyRequest(request) {
+    const fieldLabels = {
+        evento: 'Nome do evento',
+        data: 'Data da festa',
+        periodo: 'Período',
+        hora_inicio: 'Horário de início',
+        hora_termino: 'Horário de término',
+        idade: 'Idade do(a) aniversariante',
+        tema: 'Tema',
+        adultos: 'Número de adultos',
+        criancas: 'Número de crianças',
+        local_tipo: 'Local',
+        cep: 'CEP',
+        logradouro: 'Rua / Avenida',
+        numero: 'Número',
+        complemento: 'Complemento',
+        bairro: 'Bairro',
+        cidade: 'Cidade',
+        estado: 'Estado'
+    };
+    const entries = Object.entries(fieldLabels)
+        .filter(([id]) => request.fields[id])
+        .map(([id, label]) => [label, id === 'data'
+            ? formatBrazilianDate(request.fields[id])
+            : request.fields[id]]);
+
+    if (Array.isArray(request.services) && request.services.length) {
+        entries.push(['Serviços selecionados', request.services
+            .map(({ category, service }) => `${category}: ${service}`)
+            .join('\n')]);
+    }
+    if (request.budget) {
+        entries.push(['Orçamento limite estimado', new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            maximumFractionDigits: 0
+        }).format(Number(request.budget))]);
+    }
+
+    savedPartyRequestDetails.replaceChildren();
+    entries.forEach(([label, value]) => {
+        const term = document.createElement('dt');
+        term.textContent = label;
+        const description = document.createElement('dd');
+        description.textContent = value;
+        savedPartyRequestDetails.append(term, description);
+    });
+    savedPartyRequest.hidden = entries.length === 0;
+    editSavedPartyRequestButton.hidden = entries.length === 0;
+}
+
+function restoreSavedPartyRequest() {
+    try {
+        const savedRequest = localStorage.getItem(partyRequestStorageKey);
+        if (savedRequest) renderSavedPartyRequest(JSON.parse(savedRequest));
+    } catch (error) {
+        console.error('Não foi possível carregar a cópia do orçamento:', error);
+        setAccountStatus('Não foi possível carregar a cópia do orçamento salvo.', true);
+    }
+}
+
 function setAccountSavedState(isSaved) {
+    accountTitle.textContent = isSaved ? 'Minha Conta' : 'Conta';
     saveAccountButton.hidden = isSaved;
     deleteAccountLink.hidden = !isSaved;
     accountInputs.forEach((input) => {
@@ -274,12 +416,40 @@ try {
             }
         });
         setAccountSavedState(true);
-        setAccountStatus('Seus dados pessoais estão salvos neste navegador.');
     }
 } catch (error) {
     console.error('Não foi possível carregar os dados da conta:', error);
     setAccountStatus('Não foi possível carregar os dados salvos da conta.', true);
 }
+restorePartyDraft();
+restoreSavedPartyRequest();
+partyForm.addEventListener('input', savePartyDraft);
+partyForm.addEventListener('change', savePartyDraft);
+
+editSavedPartyRequestButton.addEventListener('click', () => {
+    try {
+        const savedRequest = localStorage.getItem(partyRequestStorageKey);
+        if (!savedRequest) throw new Error('Não há orçamento salvo para editar.');
+
+        const request = JSON.parse(savedRequest);
+        if (!request || typeof request !== 'object' || !request.fields || typeof request.fields !== 'object') {
+            throw new Error('Os dados salvos do orçamento estão em um formato inválido.');
+        }
+
+        applyPartyData({
+            fields: request.fields,
+            budget: request.budget,
+            selectedServices: Array.isArray(request.services)
+                ? request.services.map(({ service }) => service)
+                : []
+        });
+        savePartyDraft();
+        window.location.hash = 'minha-festa';
+    } catch (error) {
+        console.error('Não foi possível carregar o orçamento para edição:', error);
+        setAccountStatus('Não foi possível carregar os dados do orçamento para edição. Tente novamente.', true);
+    }
+});
 
 accountForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -303,8 +473,18 @@ accountForm.addEventListener('submit', (event) => {
 deleteAccountLink.addEventListener('click', (event) => {
     event.preventDefault();
     try {
-        localStorage.removeItem(accountStorageKey);
+        [accountStorageKey, partyDraftStorageKey, partyRequestStorageKey]
+            .forEach((key) => localStorage.removeItem(key));
         accountForm.reset();
+        partyForm.reset();
+        serviceCards.forEach((card) => card.classList.remove('is-selected'));
+        slider.value = '4900';
+        visualValue.textContent = 'R$ 4.900';
+        updateAddressVisibility();
+        updateCustomTimeVisibility();
+        renderSelectedServices();
+        renderSavedPartyRequest({ fields: {} });
+        setPartyStorageStatus('');
         setAccountSavedState(false);
         setAccountStatus('Conta excluida com sucesso.');
     } catch (error) {
@@ -340,7 +520,8 @@ function requireSavedAccount(event) {
     if (hasRequiredAccountData(accountData)) return accountData;
 
     event.preventDefault();
-    setAccountStatus('Preencha e salve seus dados pessoais antes de solicitar o orçamento.');
+    accountTitle.textContent = 'Criar Conta';
+    setAccountStatus('');
     window.location.hash = 'conta';
     return null;
 }
@@ -376,6 +557,22 @@ partyForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const accountData = requireSavedAccount(event);
     if (!accountData || !partyForm.reportValidity()) return;
+
+    const partyFields = Object.fromEntries(
+        Array.from(partyForm.querySelectorAll('input, select, textarea'))
+            .map((input) => [input.id, input.value.trim()])
+    );
+    const partyRequest = {
+        fields: partyFields,
+        services: Array.from(serviceCards)
+            .filter((card) => card.classList.contains('is-selected'))
+            .map((card) => ({
+                category: card.dataset.category,
+                service: card.dataset.service
+            })),
+        budget: slider.value,
+        submittedAt: new Date().toISOString()
+    };
 
     const period = periodoSelect.value === 'Outro horário'
         ? `Outro horário (${horaInicioInput.value} às ${horaTerminoInput.value})`
@@ -421,6 +618,24 @@ partyForm.addEventListener('submit', (event) => {
         '',
         `Orçamento limite estimado: ${budget}`
     ].join('\n');
+
+    try {
+        localStorage.setItem(partyRequestStorageKey, JSON.stringify(partyRequest));
+        localStorage.removeItem(partyDraftStorageKey);
+        renderSavedPartyRequest(partyRequest);
+    } catch (error) {
+        console.error('Não foi possível salvar a cópia do orçamento:', error);
+        setPartyStorageStatus('Não foi possível salvar a cópia do orçamento. O formulário foi mantido; tente novamente.', true);
+        return;
+    }
+
+    partyForm.reset();
+    serviceCards.forEach((card) => card.classList.remove('is-selected'));
+    slider.value = '4900';
+    visualValue.textContent = 'R$ 4.900';
+    updateAddressVisibility();
+    updateCustomTimeVisibility();
+    renderSelectedServices();
 
     const whatsappUrl = `https://wa.me/5511989580867?text=${encodeURIComponent(message)}`;
     window.location.assign(whatsappUrl);
