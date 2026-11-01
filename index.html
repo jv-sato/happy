@@ -13,11 +13,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=flat-background">
 </head>
 <body>
 
-    <!-- Header / Navbar -->
     <header class="navbar">
         <div class="navbar-container">
             <div class="logo-area">
@@ -49,15 +48,15 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="inicio" data-screen="inicio">
-        <div class="hero-container">
-            <h1 class="display-hero">Sua festa completa, organizada e dentro do orçamento.</h1>
-            <p class="body-lg">No hAPPy você resolve tudo em um único lugar!</p>
-            <a href="#explorar" class="btn-primary-lg">SIMULAR FESTA GRÁTIS</a>
-            <span class="microcopy">Leva menos de 2 minutos. Sem compromisso.</span>
-        </div>
-    </section>
+    <main class="site-main">
+        <section class="hero" id="inicio" data-screen="inicio">
+            <div class="hero-container">
+                <h1 class="display-hero">Sua festa completa, organizada e dentro do orçamento.</h1>
+                <p class="body-lg">No hAPPy você resolve tudo em um único lugar!</p>
+                <a href="#explorar" class="btn-primary-lg">SIMULAR FESTA GRÁTIS</a>
+                <span class="microcopy">Leva menos de 2 minutos. Sem compromisso.</span>
+            </div>
+        </section>
 
     <!-- Problema vs Solução -->
     <section class="problem-solution" data-screen="inicio">
@@ -94,11 +93,20 @@
 
     <section id="explorar" class="app-page services-page" data-screen="explorar" hidden>
         <div class="app-page-container">
-            <header class="app-page-header">
-                <p class="app-eyebrow">Monte sua festa</p>
-                <h1 class="headline-lg">Explore os serviços</h1>
-                <p class="body-md">Escolha os itens que gostaria de incluir. Você pode revisar sua seleção em Minha Festa.</p>
-            </header>
+            <p class="app-eyebrow">Monte seu pacote</p>
+            <h1 class="headline-lg">Explore os serviços</h1>
+            <p class="body-sm form-subtitle">Escolha os itens que gostaria de incluir. Você pode revisar sua seleção em Minha Festa.</p>
+
+            <div class="service-search">
+                <div class="service-search-control">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <circle cx="10.8" cy="10.8" r="6.8"></circle>
+                        <path d="m16 16 5 5"></path>
+                    </svg>
+                    <input type="search" id="servicesSearch" placeholder="Ex.: bolo, decoração, brinquedos" autocomplete="off">
+                </div>
+                <p id="servicesSearchStatus" class="service-search-status" role="status" aria-live="polite"></p>
+            </div>
 
             <section class="service-category" aria-labelledby="decoracao-title">
                 <h2 class="headline-md" id="decoracao-title">Decoração</h2>
@@ -355,7 +363,7 @@
             <h2 class="headline-lg text-center">Perguntas Frequentes</h2>
             <div class="faq-grid">
                 <div class="faq-item">
-                    <h3 class="title-md">O hAPPy cobra alguma taxa dos pais pelo orçamento?</h3>
+                    <h3 class="title-md">O hAPPy cobra alguma taxa pelo orçamento?</h3>
                     <p class="body-sm">Não. O planejamento da festa e envio do orçamento são 100% gratuitos.</p>
                 </div>
                 <div class="faq-item">
@@ -378,16 +386,14 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    </main>
+
     <footer class="footer" data-screen="inicio">
-        <div class="logo-area">
-                <img src="assets/logoA.png"
-     style="height: auto; width: 100px; display: block; margin: 0 auto;"
-     alt="hAPPy Logo"
-     class="logo">
-            </div>
+        <div class="logo-area footer-brand">
+            <img src="assets/logoA.png" alt="hAPPy Logo" class="footer-logo">
+        </div>
         <p class="body-sm">© 2026 hAPPy Tecnologia de Eventos.<br>Todos os direitos reservados.</p>
-        <small style="font-size: 8px;">Rua Anita Costa Leite, nº 372 - B3 AP31 - Mogi das Cruzes/SP - CEP 08717-300</small>    
+        <small class="footer-address">Rua Anita Costa Leite, nº 372 - B3 AP31 - Mogi das Cruzes/SP - CEP 08717-300</small>
     </footer>
 
     <nav class="bottom-nav" aria-label="Navegação inferior">
@@ -405,11 +411,14 @@
             <span>Explorar</span>
         </a>
         <a class="bottom-nav-link" href="#minha-festa" data-nav-screen="minha-festa">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M3 7 12 3l9 4-9 4z"></path>
-                <path d="M3 7v10l9 4 9-4V7M12 11v10"></path>
-            </svg>
-            <span>Minha festa</span>
+            <span class="bottom-nav-icon-wrap">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M3 7 12 3l9 4-9 4z"></path>
+                    <path d="M3 7v10l9 4 9-4V7M12 11v10"></path>
+                </svg>
+                <span class="bottom-nav-count" id="partyServicesCount" aria-hidden="true" hidden>0</span>
+            </span>
+            <span>Minha Festa</span>
         </a>
         <a class="bottom-nav-link" href="#conta" data-nav-screen="conta">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -423,16 +432,16 @@
     <dialog class="install-dialog" id="installDialog" aria-labelledby="installDialogTitle">
         <div class="install-dialog-content">
             <img src="assets/icon.png" alt="" class="install-dialog-icon">
-            <h2 class="headline-md" id="installDialogTitle">Tenha o Happy no seu celular</h2>
+            <h2 class="headline-md" id="installDialogTitle">Tenha o hAPPy no seu celular</h2>
             <p class="body-sm" id="installDialogMessage">Instale o aplicativo para acessar sua festa com mais facilidade.</p>
             <p class="install-dialog-help" id="installDialogHelp" hidden></p>
             <div class="install-dialog-actions">
-                <button class="btn-secondary-sm install-dismiss" id="dismissInstallDialog" type="button">Agora não</button>
-                <button class="btn-primary-block install-confirm" id="confirmInstall" type="button">Instalar Happy</button>
+                <button class="btn-secondary-sm install-dismiss" id="dismissInstallDialog" type="button">Depois</button>
+                <button class="btn-primary-block install-confirm" id="confirmInstall" type="button">Instalar hAPPy</button>
             </div>
         </div>
     </dialog>
 
-    <script src="script.js"></script>
+    <script type="module" src="./script.js"></script>
 </body>
 </html>
